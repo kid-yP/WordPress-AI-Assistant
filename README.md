@@ -38,8 +38,7 @@ A complete WordPress plugin that adds AI-style features to any WordPress site �
 
 
 ## 🔗 Live Demo
-
-[Click here to try it live]([YOUR_LIVE_DEMO_LINK](https://wp-ai-assistant.ct.ws/hello-ai))
+https://wp-ai-assistant.ct.ws/hello-ai/
 
 ## 💰 Upgrade Options
 
