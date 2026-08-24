@@ -52,5 +52,5 @@ GPL v2 or later
 
 ## 👨‍💻 Created By
 
-[Your Name]
-[Your Portfolio/Upwork Link]
+[Kidus Yosef]
+[kidusmekuria11@gmail.com]
