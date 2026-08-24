@@ -1,0 +1,302 @@
+/* ==========================================================================
+   WP-AI Assistant — Frontend Chat Widget
+   ========================================================================== */
+
+#wpaia-chat-root {
+	--wpaia-primary: #6366f1;
+	--wpaia-bg: #ffffff;
+	--wpaia-bot-bg: #f1f2f6;
+	--wpaia-text: #1f2333;
+	--wpaia-text-muted: #6b7280;
+	--wpaia-border: #e6e8f0;
+
+	position: fixed;
+	bottom: 22px;
+	right: 22px;
+	z-index: 999999;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+	#wpaia-chat-root {
+		--wpaia-bg: #1a1c27;
+		--wpaia-bot-bg: #262a3b;
+		--wpaia-text: #f1f2f6;
+		--wpaia-text-muted: #9ca3af;
+		--wpaia-border: #333750;
+	}
+}
+
+.wpaia-widget * {
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------
+   Launcher button
+   -------------------------------------------------------------------- */
+
+.wpaia-launcher {
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	border: none;
+	background: linear-gradient(135deg, var(--wpaia-primary), #8b5cf6);
+	color: #fff;
+	font-size: 24px;
+	cursor: pointer;
+	box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+.wpaia-launcher:hover {
+	transform: scale(1.06);
+}
+
+.wpaia-launcher-open {
+	transform: rotate(90deg) scale(1.02);
+}
+
+/* --------------------------------------------------------------------
+   Chat window
+   -------------------------------------------------------------------- */
+
+.wpaia-window {
+	position: absolute;
+	bottom: 72px;
+	right: 0;
+	width: 360px;
+	max-width: calc(100vw - 32px);
+	height: 520px;
+	max-height: calc(100vh - 140px);
+	background: var(--wpaia-bg);
+	border-radius: 16px;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--wpaia-border);
+	animation: wpaia-window-in 0.22s ease;
+}
+
+@keyframes wpaia-window-in {
+	from { opacity: 0; transform: translateY(12px) scale(0.98); }
+	to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.wpaia-chat-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 18px;
+	background: linear-gradient(135deg, var(--wpaia-primary), #8b5cf6);
+	color: #fff;
+}
+
+.wpaia-header-icon {
+	font-size: 18px;
+}
+
+.wpaia-header-title {
+	font-weight: 700;
+	font-size: 15px;
+	flex: 1;
+}
+
+.wpaia-close-btn {
+	background: rgba(255, 255, 255, 0.15);
+	border: none;
+	color: #fff;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: 13px;
+	line-height: 1;
+}
+
+.wpaia-close-btn:hover {
+	background: rgba(255, 255, 255, 0.28);
+}
+
+/* --------------------------------------------------------------------
+   Messages
+   -------------------------------------------------------------------- */
+
+.wpaia-messages {
+	flex: 1;
+	overflow-y: auto;
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	background: var(--wpaia-bg);
+}
+
+.wpaia-msg-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+	opacity: 0;
+	transform: translateY(6px);
+	transition: opacity 0.25s ease, transform 0.25s ease;
+	max-width: 100%;
+}
+
+.wpaia-msg-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.wpaia-msg-user {
+	justify-content: flex-end;
+}
+
+.wpaia-avatar {
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--wpaia-primary), #8b5cf6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	flex-shrink: 0;
+}
+
+.wpaia-bubble-wrap {
+	max-width: 78%;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.wpaia-bubble {
+	padding: 10px 14px;
+	border-radius: 16px;
+	font-size: 13.5px;
+	line-height: 1.45;
+	word-wrap: break-word;
+}
+
+.wpaia-bubble-user {
+	background: linear-gradient(135deg, var(--wpaia-primary), #4f46e5);
+	color: #fff;
+	border-bottom-right-radius: 4px;
+	margin-left: auto;
+}
+
+.wpaia-bubble-bot {
+	background: var(--wpaia-bot-bg);
+	color: var(--wpaia-text);
+	border-bottom-left-radius: 4px;
+}
+
+.wpaia-sources {
+	font-size: 11px;
+	color: var(--wpaia-text-muted);
+}
+
+.wpaia-sources a {
+	color: var(--wpaia-primary);
+	text-decoration: none;
+}
+
+.wpaia-sources a:hover {
+	text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------
+   Typing indicator
+   -------------------------------------------------------------------- */
+
+.wpaia-typing-bubble {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 12px 16px;
+}
+
+.wpaia-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--wpaia-text-muted);
+	animation: wpaia-dot-bounce 1.1s infinite ease-in-out;
+}
+
+.wpaia-dot:nth-child(2) { animation-delay: 0.15s; }
+.wpaia-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes wpaia-dot-bounce {
+	0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+	30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------
+   Input row
+   -------------------------------------------------------------------- */
+
+.wpaia-input-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px;
+	border-top: 1px solid var(--wpaia-border);
+	background: var(--wpaia-bg);
+}
+
+.wpaia-input-row input {
+	flex: 1;
+	border: 1px solid var(--wpaia-border);
+	border-radius: 999px;
+	padding: 10px 16px;
+	font-size: 13.5px;
+	background: var(--wpaia-bot-bg);
+	color: var(--wpaia-text);
+	outline: none;
+}
+
+.wpaia-input-row input:focus {
+	border-color: var(--wpaia-primary);
+}
+
+.wpaia-send-btn {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	border: none;
+	background: linear-gradient(135deg, var(--wpaia-primary), #8b5cf6);
+	color: #fff;
+	cursor: pointer;
+	font-size: 15px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.15s ease;
+}
+
+.wpaia-send-btn:hover {
+	transform: scale(1.05);
+}
+
+/* --------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+	#wpaia-chat-root {
+		bottom: 14px;
+		right: 14px;
+	}
+
+	.wpaia-window {
+		width: calc(100vw - 24px);
+		height: calc(100vh - 110px);
+		bottom: 68px;
+		right: -6px;
+	}
+}
