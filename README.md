@@ -1,4 +1,4 @@
-# WP-AI Assistant – WordPress AI Toolkit
+# WP-AI Assistant – WordPress AI Toolkit 
 
 A complete WordPress plugin that adds AI-style features to any WordPress site – without API costs!
 
